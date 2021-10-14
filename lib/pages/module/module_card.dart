@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:studyplanner/pages/dashboard/module_info.dart';
+import 'package:studyplanner/pages/module/module_info.dart';
 import 'package:studyplanner/pages/modulemenu.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
@@ -27,7 +27,7 @@ class ModuleCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(top: SizeHelper.getDisplayHeight(context) * 0.01, right: SizeHelper.getDisplayWidth(context) * 0.03),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        height: SizeHelper.getDisplayHeight(context) * 0.2,
+        height: SizeHelper.getDisplayHeight(context) * 0.21,
         width: SizeHelper.getDisplayWidth(context) * 0.85,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
@@ -43,9 +43,22 @@ class ModuleCard extends StatelessWidget {
                 Row(
                   children: [
                     InkWell(
+                      onTap: () {
+
+                      },
                       child: SvgPicture.asset(
-                        "assets/images/clock.svg",
-                        height: 22.5,
+                        "assets/images/bell.svg",
+                        height: 30,
+                      ),
+                    ),
+                    SizedBox(width: 15,),
+                    InkWell(
+                      onTap: () {
+
+                      },
+                      child: SvgPicture.asset(
+                        "assets/images/settings_dot.svg",
+                        height: 20,
                       ),
                     )
                   ],

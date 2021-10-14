@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studyplanner/pages/authentication/authentication.dart';
-import 'package:studyplanner/pages/dashboard.dart';
+import 'package:studyplanner/pages/dashboard/dashboard.dart';
 
 import 'models/user.dart';
 

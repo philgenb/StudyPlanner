@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studyplanner/pages/dashboard/module_card.dart';
+import 'package:studyplanner/pages/module/module_card.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
 class ModuleSwipe extends StatefulWidget {

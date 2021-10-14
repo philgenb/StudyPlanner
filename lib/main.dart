@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:studyplanner/pages/dashboard/module_card.dart';
+import 'package:studyplanner/pages/addmodule_menu.dart';
+import 'package:studyplanner/pages/module/module_card.dart';
 import 'package:studyplanner/pages/modulemenu.dart';
 import 'package:studyplanner/services/auth_service.dart';
 import 'package:studyplanner/shared/appbar.dart';
@@ -34,7 +35,7 @@ class _MyAppState extends State<MyApp> {
 
   CustomAppBar? customAppBar;
 
-  bool isAppBarActive = false;
+  bool isAppBarActive = true;
 
 
   @override
@@ -62,6 +63,7 @@ class _MyAppState extends State<MyApp> {
               ),
               routes: {
                 ModuleMenu.routeName: (context) => ModuleMenu(),
+                AddModuleMenu.routeName: (context) => AddModuleMenu(),
               },
             ),
           );

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:studyplanner/services/auth_service.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSize {
-  CustomAppBar({Key? key}) : super(key: key);
+
+  bool? popupMenu;
+
+  CustomAppBar({this.popupMenu, Key? key}) : super(key: key);
 
   AuthService _auth = AuthService();
 
@@ -11,14 +15,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0.0,
-      backgroundColor: Color(0xffe7e7e7),
+      backgroundColor: Colors.white,
+      systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
       titleSpacing: 0,
       leading: Padding(
-        padding: const EdgeInsets.only(left: 17.5, right: 2.5),
-        child: SvgPicture.asset(
-          "assets/images/settings.svg",
-          height: 30,
-        ),
+        padding: const EdgeInsets.only(left: 17.5, right: 10),
+        child: getLeading(context)
       ),
       actions: [
         PopupMenuButton(
@@ -26,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
             child: Row(children: [
               SvgPicture.asset(
                 "assets/images/profile-user.svg",
-                height: 30,
+                height: 25,
               ),
               SvgPicture.asset(
                 "assets/images/arrow_down.svg",
@@ -42,6 +44,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
                   ),
                 ]),
       ],
+    );
+
+  }
+
+  Widget getLeading(BuildContext context) {
+    if (popupMenu != null && popupMenu!) {
+      return InkWell(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: SvgPicture.asset(
+          "assets/images/arrow_left.svg",
+          height: 30,
+        ),
+      );
+    }
+    return SvgPicture.asset(
+      "assets/images/settings.svg",
+      height: 30,
     );
   }
 

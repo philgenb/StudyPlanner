@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:studyplanner/pages/dashboard/module_card.dart';
+import 'package:studyplanner/pages/modulemenu.dart';
 import 'package:studyplanner/services/auth_service.dart';
 import 'package:studyplanner/shared/appbar.dart';
 import 'package:studyplanner/shared/loading.dart';
@@ -58,7 +60,9 @@ class _MyAppState extends State<MyApp> {
                 resizeToAvoidBottomInset: false,
                 body: Wrapper(toggleAppBar),
               ),
-              routes: {},
+              routes: {
+                ModuleMenu.routeName: (context) => ModuleMenu(),
+              },
             ),
           );
         }
@@ -72,49 +76,3 @@ class _MyAppState extends State<MyApp> {
     isAppBarActive = status;
   }
 }
-
-
-/*
-class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
-  MyApp({Key? key}) : super(key: key);
-
-  CustomAppBar? customAppBar;
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initialization,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Center(child: Text("Error"));
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          return StreamProvider<CustomUser?>.value(
-            initialData: null,
-            value: AuthService().user,
-            child: MaterialApp(
-              theme: ThemeData(
-                  fontFamily: 'Poppins',
-                  accentColor: const Color(0xff1dbc9c),
-                  primaryColor: const Color(0xff272727)),
-              home: Scaffold(
-                appBar: CustomAppBar(),
-                resizeToAvoidBottomInset: false,
-                body: Wrapper(),
-              ),
-              routes: {},
-            ),
-          );
-        }
-
-        return MaterialApp(home: Loading());
-      },
-    );
-  }
-
-}
-
- */

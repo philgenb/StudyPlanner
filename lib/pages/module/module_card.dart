@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:studyplanner/pages/module/module_info.dart';
 import 'package:studyplanner/pages/modulemenu.dart';
+import 'package:studyplanner/services/database.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
 import '../../models/module.dart';
@@ -13,9 +14,9 @@ class ModuleCard extends StatelessWidget {
   Color moduleColor;
   String moduleName;
   bool pressable = false;
+  DataBaseService ?database;
 
-  ModuleCard(this.moduleColor, this.moduleName, {required this.pressable, Key? key, this.module}) : super(key: key);
-
+  ModuleCard(this.moduleColor, this.moduleName, {required this.pressable, Key? key, this.module, this.database}) : super(key: key);
 
 
   @override
@@ -42,7 +43,7 @@ class ModuleCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(moduleName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                Text("$moduleName  (${module?.creditPoints ?? 0} CP)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
                 Row(
                   children: [
                     InkWell(
@@ -56,8 +57,10 @@ class ModuleCard extends StatelessWidget {
                     ),
                     SizedBox(width: 15,),
                     InkWell(
-                      onTap: () {
-
+                      onLongPress: () {
+                        if (database != null) {
+                          database?.removeModule(module!);
+                        }
                       },
                       child: SvgPicture.asset(
                         "assets/images/settings_dot.svg",

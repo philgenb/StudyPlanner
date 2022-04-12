@@ -44,6 +44,7 @@ class _ModuleListState extends State<ModuleList> {
               moduleList[index].moduleName ?? "Loading...",
               module: moduleList[index],
               pressable: false,
+              database: _database,
             ))
         );
 

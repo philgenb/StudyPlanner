@@ -11,9 +11,10 @@ class Module {
   String ?zoomURL;
   Timestamp ?examTimeStamp;
   late Color color;
+  String creditPoints = "";
 
 
-  Module({required this.moduleName, required this.zoomURL, required this.examTimeStamp}) {
+  Module({required this.moduleName, required this.zoomURL, required this.examTimeStamp, required this.creditPoints}) {
     color = randomColor();
   }
 
@@ -26,6 +27,7 @@ class Module {
       moduleName: doc.id,
       zoomURL: doc.get('zoom') ?? "",
       examTimeStamp: doc.get('examTimeStamp') ?? Timestamp.now(),
+      creditPoints: doc.get('credits').toString(),
     );
   }
 

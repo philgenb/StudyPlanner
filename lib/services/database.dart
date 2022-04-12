@@ -54,8 +54,28 @@ class DataBaseService {
       'name': module.moduleName,
       'examTimeStamp': module.examTimeStamp,
       'zoom': module.zoomURL,
-      'color': module.color
+      'color': module.color.toString(),
+      'credits': double.parse(module.creditPoints)
     }, SetOptions(merge: true));
+    await incrementUserCredits(double.parse(module.creditPoints));
+    await incrementModuleCounter();
+  }
+
+  Future incrementUserCredits(double credits) async{
+    await getUserDocument().update({
+      'credits': FieldValue.increment(credits)
+    });
+  }
+
+  Future decrementUserCredits(double credits) async{
+    await getUserDocument().update({
+    'credits': FieldValue.increment(-credits)
+    });
+  }
+
+  Future getUserCredits() async{
+    DocumentSnapshot userDoc = await getUserDocument().get();
+    return userDoc.get('credits');
   }
 
   Future incrementModuleCounter() async {
@@ -78,6 +98,7 @@ class DataBaseService {
   Future removeModule(Module module) async {
     await getModuleCollection().doc(module.moduleName).delete();
     await decrementModuleCounter();
+    await decrementUserCredits(double.parse(module.creditPoints));
   }
 
   void testPrintModules() {

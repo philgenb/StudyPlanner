@@ -39,6 +39,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
   InputFieldWrapper moduleNameInput = InputFieldWrapper();
   InputFieldWrapper moduleRoomInput = InputFieldWrapper();
   InputFieldWrapper moduleZoomInput = InputFieldWrapper();
+  InputFieldWrapper moduleCreditInput = InputFieldWrapper();
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.05),
-            ModuleCard(randomColor(), moduleNameInput.getInputTitle(), pressable: false),
+            ModuleCard(Color(0xff303030), moduleNameInput.getInputTitle(), pressable: false),
 
             SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.04),
 
@@ -106,6 +107,15 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
               input: moduleZoomInput,
             ),
 
+            ModuleInputField(
+              fieldTitle: "Credit Points",
+              leadingIcon: SvgPicture.asset(
+                "assets/images/zoom_black.svg",
+                height: 27.5,
+              ),
+              input: moduleCreditInput,
+            ),
+
             ModuleInputButton(
                 leadingIcon: SvgPicture.asset(
                   "assets/images/calendar.svg",
@@ -131,7 +141,9 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
                 Module module = Module(
                     moduleName: this.moduleName,
                     examTimeStamp: this.examDate,
-                    zoomURL: this.moduleZoomInput.getInputTitle());
+                    zoomURL: this.moduleZoomInput.getInputTitle(),
+                    creditPoints: moduleCreditInput.getInputTitle(),
+                );
                 _database.addModule(module);
                 Navigator.of(context).pop();
               },
@@ -156,10 +168,10 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
       initialEntryMode: DatePickerEntryMode.input,
       locale: const Locale("de", "DE"),
     );
-    if (date != Null && date != selectedDate) {
+    if (date != null && date != selectedDate) {
       setState(() {
-        selectedDate = date!;
-        this.examDate = Timestamp.fromMicrosecondsSinceEpoch(date.microsecondsSinceEpoch);
+        selectedDate = date;
+        examDate = Timestamp.fromMicrosecondsSinceEpoch(date.microsecondsSinceEpoch);
       });
     }
   }

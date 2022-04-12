@@ -68,6 +68,9 @@ class _ModuleInputFieldState extends State<ModuleInputField> {
             onChanged: (String input) {
               setState(() {
                 widget.input.setInputTitle(input.trim());
+                if (RegExp(r'^[0-9]+$').hasMatch(input.trim())) {
+                  widget.input.setInputValue(int.parse(input.trim()));
+                }
                 if (widget.onChange != Null) {
                   widget.onChange!();
                 }

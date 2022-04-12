@@ -4,8 +4,9 @@ import 'package:studyplanner/utils/sizehelper.dart';
 class ModuleElement extends StatelessWidget {
   final Color moduleColor;
   final String moduleName;
+  final String credits;
 
-  const ModuleElement(this.moduleColor, this.moduleName, {Key? key})
+  const ModuleElement(this.moduleColor, this.moduleName, this.credits, {Key? key})
       : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class ModuleElement extends StatelessWidget {
         color: moduleColor,
       ),
       child: Text(
-        moduleName,
+        "$moduleName  ($credits CP)",
         style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17)
       ),
     );

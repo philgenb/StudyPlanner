@@ -1,10 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:studyplanner/pages/addmodule_menu.dart';
-import 'package:studyplanner/pages/module/module_card.dart';
 import 'package:studyplanner/pages/modulemenu.dart';
 import 'package:studyplanner/services/auth_service.dart';
 import 'package:studyplanner/shared/appbar.dart';
@@ -52,10 +51,24 @@ class _MyAppState extends State<MyApp> {
             initialData: null,
             value: AuthService().user,
             child: MaterialApp(
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
+              supportedLocales: [Locale('de'), Locale('en')],
               theme: ThemeData(
+                  colorScheme: ColorScheme.light(
+                    primary: Color(0xff303030),
+                  ),
                   fontFamily: 'Poppins',
                   accentColor: const Color(0xff1dbc9c),
-                  primaryColor: const Color(0xff272727)),
+                  primaryColor: const Color(0xff272727),
+                  textTheme: const TextTheme(
+                    headline1: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+                    bodyText1: TextStyle(fontSize: 16, color: Colors.white)
+                  )
+              ),
               home: Scaffold(
                 appBar: isAppBarActive ? CustomAppBar() : null,
                 resizeToAvoidBottomInset: false,

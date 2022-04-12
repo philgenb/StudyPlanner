@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:studyplanner/models/module.dart';
 import 'package:studyplanner/models/user.dart';
 import 'package:studyplanner/pages/module/module_card.dart';
 import 'package:studyplanner/pages/module/module_element.dart';
 import 'package:studyplanner/pages/dashboard/moduleswipe.dart';
 import 'package:studyplanner/shared/appbarv2.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
+
+import '../../services/auth_service.dart';
+import '../../services/database.dart';
 
 
 class HomeMenu extends StatefulWidget {
@@ -18,6 +23,26 @@ class HomeMenu extends StatefulWidget {
 
 class _HomeMenuState extends State<HomeMenu> {
 
+  final AuthService _auth = AuthService();
+  late final DataBaseService _database;
+
+  int _moduleCount = 0;
+
+  @override
+  void initState() {
+    CustomUser? currentUser = _auth.getCurrentUser();
+    _database = DataBaseService(uid: currentUser!.getUserIdentifier());
+    updateModuleCount();
+    super.initState();
+  }
+
+  void updateModuleCount() async {
+    int modules = await _database.getModuleCount();
+    setState(() {
+      _moduleCount = modules;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +54,9 @@ class _HomeMenuState extends State<HomeMenu> {
         children: [
           Text("Hello Phil G.", style: TextStyle(fontSize: 16, color: Color(0xffABABAB)),),
           Text("You've got", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
-          Text("6 Unit Tests this semester", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Color(0xff49B583))),
+
+          Text("${_moduleCount} Unit Tests this semester", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Color(0xff49B583))),
+
 
           SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.03,),
 
@@ -46,10 +73,11 @@ class _HomeMenuState extends State<HomeMenu> {
           Text("Your schedule", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
           Text("Upcoming Exams and events", style: TextStyle(fontSize: 19, color: Color(0xffABABAB))),
 
-          ModuleSwipe(),
-
-
-
+          StreamProvider<List<Module>>(
+              create: (context) => _database.streamModules(),
+              initialData: [],
+              child: ModuleSwipe(),
+          )
         ],
       ),
     );

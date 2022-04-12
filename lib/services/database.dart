@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:studyplanner/models/user.dart';
 
+import '../models/module.dart';
+
 class DataBaseService {
   final String? uid;
 
@@ -20,10 +22,18 @@ class DataBaseService {
     return userCollection.doc(this.uid);
   }
 
+  CollectionReference getModuleCollection() {
+    return getUserDocument().collection('modules');
+  }
+
 
   /// creates a new user with a given profile name.
   Future createUser(String profileName) async {
-    await getUserDocument().set({'name': profileName});
+    await getUserDocument().set({
+      'name': profileName,
+      'moduleCount': 0,
+      'credits': 0
+    });
   }
 
   /// gets the profile name of the user.
@@ -37,6 +47,55 @@ class DataBaseService {
     DocumentSnapshot user =
     users.docs.firstWhere((element) => element.get('name') == username);
     return CustomUser(user['name'], userID: user.id);
+  }
+
+  Future addModule(Module module) async {
+    await getModuleCollection().doc(module.moduleName).set({
+      'name': module.moduleName,
+      'examTimeStamp': module.examTimeStamp,
+      'zoom': module.zoomURL,
+      'color': module.color
+    }, SetOptions(merge: true));
+  }
+
+  Future incrementModuleCounter() async {
+    await getUserDocument().update({
+      'moduleCount': FieldValue.increment(1)
+    });
+  }
+
+  Future decrementModuleCounter() async {
+    await getUserDocument().update({
+      'moduleCount': FieldValue.increment(-1)
+    });
+  }
+
+  Future<int> getModuleCount() async {
+    DocumentSnapshot userDoc = await getUserDocument().get();
+    return userDoc.get('moduleCount');
+  }
+
+  Future removeModule(Module module) async {
+    await getModuleCollection().doc(module.moduleName).delete();
+    await decrementModuleCounter();
+  }
+
+  void testPrintModules() {
+    print("Print Modules");
+    getModuleCollection().snapshots().forEach((element) {
+      element.docs.forEach((elem) {
+        Module module = Module.fromFireStore(elem);
+        print("test: ${module.moduleName}");
+      });
+    });
+  }
+
+  
+  Stream<List<Module>> streamModules() {
+    return getModuleCollection().orderBy('examTimeStamp').snapshots()
+        .map((query) => query.docs
+        .map((doc) => Module.fromFireStore(doc))
+        .toList());
   }
 
 }

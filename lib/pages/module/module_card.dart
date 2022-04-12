@@ -4,20 +4,23 @@ import 'package:studyplanner/pages/module/module_info.dart';
 import 'package:studyplanner/pages/modulemenu.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
+import '../../models/module.dart';
+
 class ModuleCard extends StatelessWidget {
 
-
+  Module ?module;
 
   Color moduleColor;
   String moduleName;
   bool pressable = false;
 
-  ModuleCard(this.moduleColor, this.moduleName, {required this.pressable, Key? key}) : super(key: key);
+  ModuleCard(this.moduleColor, this.moduleName, {required this.pressable, Key? key, this.module}) : super(key: key);
 
 
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () {
         if (pressable) {
@@ -80,10 +83,17 @@ class ModuleCard extends StatelessWidget {
                   "assets/images/map.svg",
                   height: 25,
                 ),),
-                ModuleInformation(title: "Zoom", moduleIcon: SvgPicture.asset(
-                  "assets/images/zoom.svg",
-                  height: 25,
-                ),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    ModuleInformation(title: "Zoom", moduleIcon: SvgPicture.asset(
+                      "assets/images/zoom.svg",
+                      height: 25,
+                    )),
+                    Text(module?.getDateString() ?? "Datum", style: Theme.of(context).textTheme.headline1)
+                  ],
+                ),
               ],
             )
 

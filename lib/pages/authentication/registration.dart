@@ -160,6 +160,7 @@ class _RegistrationState extends State<Registration> {
     return Align(
       alignment: Alignment.center,
       child: RichText(
+        textDirection: TextDirection.ltr,
         text: const TextSpan(
             style: TextStyle(color: Color(0xff171717), fontFamily: 'Poppins'),
             children: [

@@ -43,7 +43,7 @@ class ModuleCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("$moduleName  (${module?.creditPoints ?? 0} CP)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                Text("$moduleName  (${module?.creditPoints ?? 0} CP)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18), softWrap: true,),
                 Row(
                   children: [
                     InkWell(

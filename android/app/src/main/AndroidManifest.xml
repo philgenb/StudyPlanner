@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.cbuystudio.studyplanner.studyplanner">
    <application
-        android:label="studyplanner"
+        android:label="StudyPlanner"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

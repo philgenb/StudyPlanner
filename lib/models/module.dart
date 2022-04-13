@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:studyplanner/theme/colors.dart';
 
-import '../utils/DateFormatter.dart';
+import '../utils/dateutil.dart';
 
 class Module {
 

@@ -11,7 +11,7 @@ import 'package:studyplanner/shared/appbar.dart';
 import 'package:studyplanner/shared/inputfield.dart';
 import 'package:studyplanner/shared/inputfieldbutton.dart';
 import 'package:studyplanner/theme/colors.dart';
-import 'package:studyplanner/utils/DateFormatter.dart';
+import 'package:studyplanner/utils/dateutil.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
 class AddModuleMenu extends StatefulWidget {

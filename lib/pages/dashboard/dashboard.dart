@@ -28,19 +28,22 @@ class _HomeMenuState extends State<HomeMenu> {
   late final DataBaseService _database;
 
   int _moduleCount = 0;
+  double _creditPoints = 0;
 
   @override
   void initState() {
     CustomUser? currentUser = _auth.getCurrentUser();
     _database = DataBaseService(uid: currentUser!.getUserIdentifier());
-    updateModuleCount();
+    updateValues();
     super.initState();
   }
 
-  void updateModuleCount() async {
+  void updateValues() async {
     int modules = await _database.getModuleCount();
+    double credits = await _database.getUserCredits();
     setState(() {
       _moduleCount = modules;
+      _creditPoints = credits;
     });
   }
 
@@ -49,7 +52,7 @@ class _HomeMenuState extends State<HomeMenu> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: SizeHelper.getDisplayWidth(context) * 0.075, vertical: SizeHelper.getDisplayHeight(context) * 0.015),
+      padding: EdgeInsets.symmetric(horizontal: SizeHelper.getDisplayWidth(context) * 0.075, vertical: SizeHelper.getDisplayHeight(context) * 0.02),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -61,21 +64,25 @@ class _HomeMenuState extends State<HomeMenu> {
             child: ModuleShortList(),
           ),
 
-          // ModuleElement(Color(0xff7F86FF), "Lineare Algebra II  (6)"),
-          // ModuleElement(Color(0xffff4171), "Betriebsysteme  (5)"),
-          // ModuleElement(Color(0xffffbd69), "Rechnerorganisation  (4)"),
-          // ModuleElement(Color(0xff5dd59e), "Datenbanksysteme  (7)"),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+                border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Text("• ${_creditPoints} / 30  Credit Points", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+          ),
 
-          SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.03,),
+          SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.025,),
+
 
           Text("Your schedule", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
           Text("Upcoming Exams and events", style: TextStyle(fontSize: 19, color: Color(0xffABABAB))),
-
           StreamProvider<List<Module>>(
               create: (context) => _database.streamModules(),
               initialData: [],
               child: ModuleSwipe(),
-          )
+          ),
+
         ],
       ),
     );
@@ -87,6 +94,7 @@ class _HomeMenuState extends State<HomeMenu> {
       Text("You've got", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
 
       Text("${_moduleCount} Unit Tests this semester", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Color(0xff49B583))),
+
       SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.03,),
 
       Text("Your modules", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),

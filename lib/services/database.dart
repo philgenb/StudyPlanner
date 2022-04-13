@@ -73,7 +73,7 @@ class DataBaseService {
     });
   }
 
-  Future getUserCredits() async{
+  Future<double> getUserCredits() async{
     DocumentSnapshot userDoc = await getUserDocument().get();
     return userDoc.get('credits');
   }

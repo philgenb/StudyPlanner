@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:studyplanner/pages/module/placeholder_card.dart';
 import 'package:studyplanner/theme/colors.dart';
+import 'package:studyplanner/utils/dateutil.dart';
 
 import '../../models/module.dart';
 import '../../models/user.dart';
@@ -35,12 +38,32 @@ class _ModuleListState extends State<ModuleList> {
     return ListView.builder(
       itemCount: moduleList.length,
       itemBuilder: (BuildContext context, int index) {
+        if (index < moduleList.length - 1) {
+          Duration dur = DateUtil.getDuration(moduleList[index].examTimeStamp, moduleList[index + 1].examTimeStamp);
+          return Column(
+            children: [
+              Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical:
+                      SizeHelper.getDisplayHeight(context) * 0.0075),
+                  child: (ModuleCard(
+                    colors[index % colors.length],
+                    moduleList[index].moduleName ?? "Loading...",
+                    module: moduleList[index],
+                    pressable: false,
+                    database: _database,
+                  ))
+              ),
+              PlaceholderCard(duration: dur),
+            ],
+          );
+        }
         return Container(
             margin: EdgeInsets.symmetric(
                 vertical:
                 SizeHelper.getDisplayHeight(context) * 0.0075),
             child: (ModuleCard(
-              randomColor(),
+              colors[index % colors.length],
               moduleList[index].moduleName ?? "Loading...",
               module: moduleList[index],
               pressable: false,
@@ -50,6 +73,10 @@ class _ModuleListState extends State<ModuleList> {
 
       },
     );
+
   }
+
+
+
 }
 

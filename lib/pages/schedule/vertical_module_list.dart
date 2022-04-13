@@ -52,6 +52,7 @@ class _ModuleListState extends State<ModuleList> {
                     module: moduleList[index],
                     pressable: false,
                     database: _database,
+                    cropped: true,
                   ))
               ),
               PlaceholderCard(duration: dur),
@@ -68,6 +69,7 @@ class _ModuleListState extends State<ModuleList> {
               module: moduleList[index],
               pressable: false,
               database: _database,
+              cropped: true,
             ))
         );
 

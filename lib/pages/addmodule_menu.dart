@@ -63,7 +63,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.05),
-            ModuleCard(Color(0xff303030), moduleNameInput.getInputTitle(), pressable: false),
+            ModuleCard(Color(0xff303030), moduleNameInput.getInputTitle(), pressable: false, credits: moduleCreditInput.getInputTitle(),),
 
             SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.04),
 
@@ -109,11 +109,14 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
 
             ModuleInputField(
               fieldTitle: "Credit Points",
-              leadingIcon: SvgPicture.asset(
-                "assets/images/zoom_black.svg",
-                height: 27.5,
-              ),
+              leadingIcon: Image.asset('assets/images/coins.png', height: 27.5,),
               input: moduleCreditInput,
+              acceptNumbers: true,
+              onChange: () {
+                setState(() {
+
+                });
+              },
             ),
 
             ModuleInputButton(

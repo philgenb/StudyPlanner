@@ -9,8 +9,9 @@ class ModuleInputField extends StatefulWidget {
   InputFieldWrapper input;
 
   Function ?onChange;
+  bool ?acceptNumbers = false;
 
-  ModuleInputField({required this.leadingIcon, required this.fieldTitle, required this.input, Key? key, this.onChange}) : super(key: key);
+  ModuleInputField({required this.leadingIcon, required this.fieldTitle, required this.input, Key? key, this.onChange, this.acceptNumbers}) : super(key: key);
 
   @override
   _ModuleInputFieldState createState() => _ModuleInputFieldState();
@@ -50,6 +51,7 @@ class _ModuleInputFieldState extends State<ModuleInputField> {
                 return "Invalid " + widget.fieldTitle;
               }
             },
+            keyboardType: (widget.acceptNumbers ?? false) ? TextInputType.number : TextInputType.text,
             decoration: InputDecoration(
               border: InputBorder.none,
               filled: true,

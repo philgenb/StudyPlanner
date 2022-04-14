@@ -32,68 +32,85 @@ class ModuleCard extends StatelessWidget {
 
         }
       },
-      child: Container(
-        margin: EdgeInsets.only(top: SizeHelper.getDisplayHeight(context) * 0.01, right: SizeHelper.getDisplayWidth(context) * 0.03),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        //height: SizeHelper.getDisplayHeight(context) * 0.21,
-        width: SizeHelper.getDisplayWidth(context) * 0.85,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: moduleColor,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("$moduleName  (${module?.creditPoints ?? credits} CP)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18), softWrap: true,),
-                Row(
-                  children: [
-                    getNotificationButton(),
-                    SizedBox(width: 15,),
-                    InkWell(
-                      onLongPress: () {
-                        if (database != null) {
-                          database?.removeModule(module!);
-                        }
-                      },
-                      child: SvgPicture.asset(
-                        "assets/images/settings_dot.svg",
-                        height: 20,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-            SizedBox(height: 30,),
+      child: Dismissible(
+        key: Key(moduleName),
+        background: getDismissBackground(),
+         direction: DismissDirection.endToStart,
+        onDismissed: (direction) {
+          if (direction == DismissDirection.endToStart) {
+            if (database != null) {
+              database?.removeModule(module!);
+            }
+          }
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: SizeHelper.getDisplayHeight(context) * 0.01, right: SizeHelper.getDisplayWidth(context) * 0.03),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          //height: SizeHelper.getDisplayHeight(context) * 0.21,
+          width: SizeHelper.getDisplayWidth(context) * 0.85,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: moduleColor,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("$moduleName  (${module?.creditPoints ?? credits} CP)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18), softWrap: true,),
+                  Row(
+                    children: [
+                      getNotificationButton(),
+                      SizedBox(width: 15,),
+                      getMoreInfoButton(),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(height: 30,),
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                getModuleInformation(),
-                !cropped ? ModuleInformation(title: "Raum 201", moduleIcon: SvgPicture.asset(
-                  "assets/images/map.svg",
-                  height: 25,
-                ),) : SizedBox(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    !cropped ? ModuleInformation(title: "Zoom", moduleIcon: SvgPicture.asset(
-                      "assets/images/zoom.svg",
-                      height: 25,
-                    )) : SizedBox(),
-                    Text(module?.getDateString() ?? "Datum", style: Theme.of(context).textTheme.headline1)
-                  ],
-                ),
-                cropped ? SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.0125) : SizedBox()
-              ],
-            )
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  getModuleInformation(),
+                  !cropped ? ModuleInformation(title: "Raum 201", moduleIcon: SvgPicture.asset(
+                    "assets/images/map.svg",
+                    height: 25,
+                  ),) : SizedBox(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      !cropped ? ModuleInformation(title: "Zoom", moduleIcon: SvgPicture.asset(
+                        "assets/images/zoom.svg",
+                        height: 25,
+                      )) : SizedBox(),
+                      Text(module?.getDateString() ?? "Datum", style: Theme.of(context).textTheme.headline1)
+                    ],
+                  ),
+                  cropped ? SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.0125) : SizedBox()
+                ],
+              )
 
-          ],
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget getDismissBackground() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 30),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // Text("X", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xffFF2400)),),
+          //  SizedBox(width: 5),
+          // Icon(Icons.cancel, color: Color(0xffFF2400), size: 40),
+        ],
       ),
     );
   }
@@ -110,6 +127,18 @@ class ModuleCard extends StatelessWidget {
     );
   }
 
+  Widget getMoreInfoButton() {
+    return InkWell(
+      onLongPress: () {
+
+      },
+      child: SvgPicture.asset(
+        "assets/images/settings_dot.svg",
+        height: 20,
+      ),
+    );
+  }
+
   Widget getModuleInformation() {
     if (cropped) {
       return SizedBox();
@@ -121,4 +150,5 @@ class ModuleCard extends StatelessWidget {
         height: 22.5,
       ),);
   }
+
 }

@@ -29,9 +29,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
   late final DataBaseService _database;
 
   Color moduleColor = Color(0xff303030);
-   String moduleName = "Digitaltechnik";
-  // String moduleRoom = "";
-  // String zoomURL = "";
+  String moduleName = "Digitaltechnik";
   Timestamp examDate = Timestamp.now();
 
   DateTime selectedDate = DateTime.now();
@@ -83,6 +81,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
               ),
             ),
 
+            /*
             ModuleInputField(
               fieldTitle: "Raum",
               leadingIcon: SvgPicture.asset(
@@ -106,6 +105,8 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
               ),
               input: moduleZoomInput,
             ),
+
+             */
 
             ModuleInputField(
               fieldTitle: "Credit Points",
@@ -132,6 +133,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
 
             TextButton(
               style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(horizontal: 20, vertical: 7.5)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -168,7 +170,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
       initialDatePickerMode: DatePickerMode.day,
-      initialEntryMode: DatePickerEntryMode.input,
+      initialEntryMode: DatePickerEntryMode.calendar,
       locale: const Locale("de", "DE"),
     );
     if (date != null && date != selectedDate) {

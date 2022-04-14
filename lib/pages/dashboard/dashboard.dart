@@ -9,6 +9,7 @@ import 'package:studyplanner/pages/dashboard/moduleswipe.dart';
 import 'package:studyplanner/shared/appbarv2.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
+import '../../models/profile.dart';
 import '../../services/auth_service.dart';
 import '../../services/database.dart';
 
@@ -27,24 +28,11 @@ class _HomeMenuState extends State<HomeMenu> {
   final AuthService _auth = AuthService();
   late final DataBaseService _database;
 
-  int _moduleCount = 0;
-  double _creditPoints = 0;
-
   @override
   void initState() {
     CustomUser? currentUser = _auth.getCurrentUser();
     _database = DataBaseService(uid: currentUser!.getUserIdentifier());
-    updateValues();
     super.initState();
-  }
-
-  void updateValues() async {
-    int modules = await _database.getModuleCount();
-    double credits = await _database.getUserCredits();
-    setState(() {
-      _moduleCount = modules;
-      _creditPoints = credits;
-    });
   }
 
 
@@ -69,7 +57,11 @@ class _HomeMenuState extends State<HomeMenu> {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
                 border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Text("• ${_creditPoints} / 30  Credit Points", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+            child: Consumer<Profile>(
+                builder: (BuildContext context, profile, child) {
+                  return Text("• ${profile.credits} / 30  Credit Points", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white));
+                },
+            ),
           ),
 
           SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.025,),
@@ -90,10 +82,15 @@ class _HomeMenuState extends State<HomeMenu> {
 
   List<Widget> getHeadElements() {
     return [
-      Text("Hello Phil G.", style: TextStyle(fontSize: 16, color: Color(0xffABABAB)),),
+      Text("Hello ${widget._user.getUserName()}", style: TextStyle(fontSize: 16, color: Color(0xffABABAB)),),
       Text("You've got", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
 
-      Text("${_moduleCount} Unit Tests this semester", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Color(0xff49B583))),
+      Consumer<Profile>(
+        builder: (BuildContext context, profile, child) {
+          return Text("${profile.moduleCount} Unit Tests this semester", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Color(0xff49B583)));
+        },
+      ),
+
 
       SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.03,),
 

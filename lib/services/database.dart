@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:studyplanner/models/user.dart';
 
 import '../models/module.dart';
+import '../models/profile.dart';
 
 class DataBaseService {
   final String? uid;
@@ -117,6 +118,10 @@ class DataBaseService {
         .map((query) => query.docs
         .map((doc) => Module.fromFireStore(doc))
         .toList());
+  }
+
+  Stream<Profile> get streamProfile {
+    return getUserDocument().snapshots().map((snap) => Profile.fromFireStore(snap));
   }
 
 }

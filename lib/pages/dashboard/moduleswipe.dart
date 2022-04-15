@@ -32,7 +32,7 @@ class _ModuleSwipeState extends State<ModuleSwipe> {
         }),
         itemCount: moduleList.length,
         itemBuilder: (BuildContext context, int index) {
-          return ModuleCard(Color(0xff7F86FF), moduleList[index].moduleName ?? "Lineare Algebra II", pressable: true, module: moduleList[index]);
+          return ModuleCard(Color(0xff7F86FF), moduleList[index].moduleName, pressable: true, module: moduleList[index]);
         },
       ),
     );

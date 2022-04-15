@@ -35,7 +35,7 @@ class ModuleCard extends StatelessWidget {
       child: Dismissible(
         key: Key(moduleName),
         background: getDismissBackground(),
-         direction: DismissDirection.endToStart,
+        direction: cropped ? DismissDirection.endToStart : DismissDirection.none,
         onDismissed: (direction) {
           if (direction == DismissDirection.endToStart) {
             if (database != null) {
@@ -73,11 +73,7 @@ class ModuleCard extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  getModuleInformation(),
-                  !cropped ? ModuleInformation(title: "Raum 201", moduleIcon: SvgPicture.asset(
-                    "assets/images/map.svg",
-                    height: 25,
-                  ),) : SizedBox(),
+                  getModuleInformation(module!),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -139,16 +135,24 @@ class ModuleCard extends StatelessWidget {
     );
   }
 
-  Widget getModuleInformation() {
+  Widget getModuleInformation(Module module) {
     if (cropped) {
       return SizedBox();
     }
-    return ModuleInformation(
-      title: "10:30 Uhr",
-      moduleIcon: SvgPicture.asset(
-        "assets/images/clock.svg",
-        height: 22.5,
-      ),);
+    return Column(
+      children: [
+        ModuleInformation(
+          title: module.time,
+          moduleIcon: SvgPicture.asset(
+            "assets/images/clock.svg",
+            height: 22.5,
+          ),),
+        ModuleInformation(title: module.room, moduleIcon: SvgPicture.asset(
+          "assets/images/map.svg",
+          height: 25,
+        ),)
+      ],
+    );
   }
 
 }

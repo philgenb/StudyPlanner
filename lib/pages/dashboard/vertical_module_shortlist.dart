@@ -21,7 +21,7 @@ class _ModuleShortListState extends State<ModuleShortList> {
       child: ListView.builder(
         itemCount: modules.length,
           itemBuilder: (context, index) {
-        return ModuleElement(colors[index % colors.length], modules[index].moduleName ?? "Module", modules[index].creditPoints);
+        return ModuleElement(colors[index % colors.length], modules[index].moduleName, modules[index].creditPoints);
       }),
     );
   }

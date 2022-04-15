@@ -7,19 +7,21 @@ import '../utils/dateutil.dart';
 
 class Module {
 
-  String ?moduleName;
-  String ?zoomURL;
-  Timestamp ?examTimeStamp;
+  String moduleName;
+  String zoomURL;
+  String room;
+  String time;
+  Timestamp examTimeStamp;
   late Color color;
-  String creditPoints = "";
+  String creditPoints;
 
 
-  Module({required this.moduleName, required this.zoomURL, required this.examTimeStamp, required this.creditPoints}) {
+  Module({required this.moduleName, required this.zoomURL, required this.examTimeStamp, required this.creditPoints, this.room = "Unknown", this.time = "Unknown"}) {
     color = randomColor();
   }
 
   String getDateString() {
-    return DateUtil.formatDateTimeToPrint(DateTime.fromMicrosecondsSinceEpoch(this.examTimeStamp!.microsecondsSinceEpoch));
+    return DateUtil.formatDateTimeToPrint(DateTime.fromMicrosecondsSinceEpoch(this.examTimeStamp.microsecondsSinceEpoch));
   }
 
   factory Module.fromFireStore(DocumentSnapshot doc) {
@@ -27,6 +29,8 @@ class Module {
       moduleName: doc.id,
       zoomURL: doc.get('zoom') ?? "",
       examTimeStamp: doc.get('examTimeStamp') ?? Timestamp.now(),
+      time: doc.get('time'),
+      room: doc.get('room'),
       creditPoints: doc.get('credits').toString(),
     );
   }

@@ -81,7 +81,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
               ),
             ),
 
-            /*
+
             ModuleInputField(
               fieldTitle: "Raum",
               leadingIcon: SvgPicture.asset(
@@ -106,7 +106,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
               input: moduleZoomInput,
             ),
 
-             */
+
 
             ModuleInputField(
               fieldTitle: "Credit Points",
@@ -148,6 +148,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
                     examTimeStamp: this.examDate,
                     zoomURL: this.moduleZoomInput.getInputTitle(),
                     creditPoints: moduleCreditInput.getInputTitle(),
+                    room: moduleRoomInput.getInputTitle(),
                 );
                 _database.addModule(module);
                 Navigator.of(context).pop();

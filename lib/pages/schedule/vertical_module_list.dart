@@ -48,7 +48,7 @@ class _ModuleListState extends State<ModuleList> {
                       SizeHelper.getDisplayHeight(context) * 0.0075),
                   child: (ModuleCard(
                     colors[index % colors.length],
-                    moduleList[index].moduleName ?? "Loading...",
+                    moduleList[index].moduleName,
                     module: moduleList[index],
                     pressable: false,
                     database: _database,
@@ -65,7 +65,7 @@ class _ModuleListState extends State<ModuleList> {
                 SizeHelper.getDisplayHeight(context) * 0.0075),
             child: (ModuleCard(
               colors[index % colors.length],
-              moduleList[index].moduleName ?? "Loading...",
+              moduleList[index].moduleName,
               module: moduleList[index],
               pressable: false,
               database: _database,

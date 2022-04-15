@@ -56,7 +56,9 @@ class DataBaseService {
       'examTimeStamp': module.examTimeStamp,
       'zoom': module.zoomURL,
       'color': module.color.toString(),
-      'credits': double.parse(module.creditPoints)
+      'credits': double.parse(module.creditPoints),
+      'room': module.room,
+      'time': module.time
     }, SetOptions(merge: true));
     await incrementUserCredits(double.parse(module.creditPoints));
     await incrementModuleCounter();

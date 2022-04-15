@@ -21,7 +21,7 @@ class Module {
   }
 
   String getDateString() {
-    return DateUtil.formatDateTimeToPrint(DateTime.fromMicrosecondsSinceEpoch(this.examTimeStamp.microsecondsSinceEpoch));
+    return DateUtil.formatDateTimeToPrint(DateTime.fromMicrosecondsSinceEpoch(examTimeStamp.microsecondsSinceEpoch));
   }
 
   factory Module.fromFireStore(DocumentSnapshot doc) {

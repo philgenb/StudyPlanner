@@ -4,7 +4,7 @@ import 'package:studyplanner/pages/module/module_info.dart';
 import 'package:studyplanner/pages/modulemenu.dart';
 import 'package:studyplanner/services/database.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../models/module.dart';
 
 class ModuleCard extends StatelessWidget {
@@ -73,15 +73,12 @@ class ModuleCard extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  getModuleInformation(module!),
+                  getModuleInformation(module),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      !cropped ? ModuleInformation(title: "Zoom", moduleIcon: SvgPicture.asset(
-                        "assets/images/zoom.svg",
-                        height: 25,
-                      )) : SizedBox(),
+                      getZoomButton(module),
                       Text(module?.getDateString() ?? "Datum", style: Theme.of(context).textTheme.headline1)
                     ],
                   ),
@@ -111,6 +108,24 @@ class ModuleCard extends StatelessWidget {
     );
   }
 
+  Widget getZoomButton(Module? module) {
+    return !cropped ? InkWell(
+      onTap: () async {
+        if (module != null && module.zoomURL.isNotEmpty) {
+          if (!module.zoomURL.startsWith("http://")) {
+            await launch("http://${module.zoomURL}");
+            return;
+          }
+          await launch(module.zoomURL);
+        }
+      },
+      child: ModuleInformation(title: "Zoom", moduleIcon: SvgPicture.asset(
+        "assets/images/zoom.svg",
+        height: 25,
+      )),
+    ) : SizedBox();
+  }
+
   Widget getNotificationButton() {
     return InkWell(
       onTap: () {
@@ -135,19 +150,19 @@ class ModuleCard extends StatelessWidget {
     );
   }
 
-  Widget getModuleInformation(Module module) {
+  Widget getModuleInformation(Module? module) {
     if (cropped) {
       return SizedBox();
     }
     return Column(
       children: [
         ModuleInformation(
-          title: module.time,
+          title: module?.time ?? "Unknown",
           moduleIcon: SvgPicture.asset(
             "assets/images/clock.svg",
             height: 22.5,
           ),),
-        ModuleInformation(title: module.room, moduleIcon: SvgPicture.asset(
+        ModuleInformation(title: module?.room ?? "Unknown", moduleIcon: SvgPicture.asset(
           "assets/images/map.svg",
           height: 25,
         ),)

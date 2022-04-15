@@ -51,6 +51,7 @@ class _HomeMenuState extends State<HomeMenu> {
             initialData: [],
             child: ModuleShortList(),
           ),
+          SizedBox(height: 30,),
 
           Container(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),

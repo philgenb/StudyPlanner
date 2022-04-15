@@ -28,6 +28,8 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
   final AuthService _auth = AuthService();
   late final DataBaseService _database;
 
+  Module module = Module(creditPoints: '0', examTimeStamp: Timestamp.now(), moduleName: '', zoomURL: '');
+
   Color moduleColor = Color(0xff303030);
   String moduleName = "Digitaltechnik";
   Timestamp examDate = Timestamp.now();
@@ -61,7 +63,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.05),
-            ModuleCard(Color(0xff303030), moduleNameInput.getInputTitle(), pressable: false, credits: moduleCreditInput.getInputTitle(),),
+            ModuleCard(Color(0xff303030), moduleNameInput.getInputTitle(), pressable: false, credits: moduleCreditInput.getInputTitle(), module: module,),
 
             SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.04),
 
@@ -75,7 +77,8 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
                 input: moduleNameInput,
                 onChange: () {
                   setState(() {
-                    this.moduleName = moduleNameInput.getInputTitle();
+                    moduleName = moduleNameInput.getInputTitle();
+                    module.moduleName = moduleNameInput.getInputTitle();
                   });
                 },
               ),
@@ -92,7 +95,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
               input: moduleRoomInput,
               onChange: () {
                 setState(() {
-
+                  module.room = moduleRoomInput.getInputTitle();
                 });
               },
             ),
@@ -115,7 +118,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
               acceptNumbers: true,
               onChange: () {
                 setState(() {
-
+                  module.creditPoints = moduleCreditInput.getInputTitle();
                 });
               },
             ),
@@ -178,6 +181,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
       setState(() {
         selectedDate = date;
         examDate = Timestamp.fromMicrosecondsSinceEpoch(date.microsecondsSinceEpoch);
+        module.examTimeStamp = examDate;
       });
     }
   }

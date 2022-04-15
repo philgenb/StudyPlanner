@@ -44,7 +44,7 @@ class _SignInState extends State<SignIn> {
             TitleWidget(
                 title: "Sign In",
                 subTitle:
-                "Login into your Account to connect with your friends",
+                "Login into your Account to plan your exam phase",
                 iconButton: null),
             Form(
                 key: _formInputKey,

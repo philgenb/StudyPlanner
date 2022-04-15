@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studyplanner/models/module.dart';
 import 'package:studyplanner/models/user.dart';
-import 'package:studyplanner/pages/dashboard/vertical_module_shortlist.dart';
-import 'package:studyplanner/pages/module/module_card.dart';
-import 'package:studyplanner/pages/module/module_element.dart';
 import 'package:studyplanner/pages/dashboard/moduleswipe.dart';
-import 'package:studyplanner/shared/appbarv2.dart';
+import 'package:studyplanner/pages/dashboard/vertical_module_shortlist.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
 import '../../models/profile.dart';

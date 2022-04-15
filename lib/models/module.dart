@@ -21,7 +21,17 @@ class Module {
   }
 
   String getDateString() {
-    return DateUtil.formatDateTimeToPrint(DateTime.fromMicrosecondsSinceEpoch(examTimeStamp.microsecondsSinceEpoch));
+    return DateUtil.formatDateTimeToPrint(examTimeStamp.toDate());
+  }
+  
+  String getRemainingTimeString() {
+    Duration duration =  examTimeStamp.toDate().difference(DateTime.now());
+    int days = duration.inDays;
+    if (days >= 30) {
+      return "in ${(days / 30).round()} Monaten";
+    } else {
+      return "in $days Tagen";
+    }
   }
 
   factory Module.fromFireStore(DocumentSnapshot doc) {

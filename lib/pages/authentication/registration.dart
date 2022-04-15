@@ -42,7 +42,7 @@ class _RegistrationState extends State<Registration> {
             TitleWidget(
                 title: "Sign Up",
                 subTitle:
-                "Create an account, so you can connect with your friends",
+                "Create an account, so you can plan your exam phase",
                 iconButton: null),
             SizedBox(
               height: SizeHelper.getDisplayHeight(context) * 0.03,

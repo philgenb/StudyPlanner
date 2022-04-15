@@ -79,7 +79,7 @@ class ModuleCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       getZoomButton(module),
-                      Text(module?.getDateString() ?? "Datum", style: Theme.of(context).textTheme.headline1)
+                      Text(cropped ? module?.getDateString() ?? "" : module?.getRemainingTimeString() ?? "", style: Theme.of(context).textTheme.headline1)
                     ],
                   ),
                   cropped ? SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.0125) : SizedBox()

@@ -48,32 +48,14 @@ class _ModuleMenuState extends State<ModuleMenu> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Your modules",
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
-            Text("Your running modules",
-                style: TextStyle(fontSize: 19, color: Color(0xffABABAB))),
-            SizedBox(height: 10),
+            const Text("Your modules", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
+            const Text("Your running modules", style: TextStyle(fontSize: 19, color: Color(0xffABABAB))),
+            const SizedBox(height: 10),
             Expanded(
               child: StreamProvider<List<Module>>(
                 create: (context) => _database.streamModules(),
                 initialData: [],
                 child: ModuleList()
-
-    // ListView.builder(
-    //                 itemCount: 3,
-    //                 itemBuilder: (BuildContext context, int index) {
-    //                   return Container(
-    //                       margin: EdgeInsets.symmetric(
-    //                           vertical:
-    //                               SizeHelper.getDisplayHeight(context) * 0.0075),
-    //                       child: (ModuleCard(
-    //                         Color(0xff7F86FF),
-    //                         "Lineare Algebra II",
-    //                         pressable: false,
-    //                       )));
-    //                 },
-    //               )
-
               ),
             ),
             getAddModuleButton()

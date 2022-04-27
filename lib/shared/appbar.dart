@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
     return AppBar(
       elevation: 0.0,
       backgroundColor: Colors.white,
-      systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
+       systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       titleSpacing: 0,
       leading: Padding(
         padding: const EdgeInsets.only(left: 17.5, right: 10),
@@ -24,8 +24,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       ),
       actions: [
         PopupMenuButton(
-
             child: Row(children: [
+              SizedBox(width: 10,),
               SvgPicture.asset(
                 "assets/images/profile-user.svg",
                 height: 25,
@@ -35,9 +35,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
                 height: 50,
               )
             ]),
+            elevation: 0,
+            shape: const OutlineInputBorder(
+              borderSide: BorderSide(width: 3),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
             itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: Text("Logout", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    // padding: EdgeInsets.all(2),
+                    child: Text("Logout", style: Theme.of(context).textTheme.headline2),
                     onTap: () {
                       _auth.signOut();
                     },

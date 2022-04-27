@@ -58,7 +58,10 @@ class ModuleCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("$moduleName  (${module?.creditPoints ?? credits} CP)", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18), softWrap: true,),
+                  Expanded(
+                    child: Text("$moduleName  (${module?.creditPoints ?? credits} CP)", overflow: TextOverflow.fade,
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18), softWrap: false,),
+                  ),
                   Row(
                     children: [
                       getNotificationButton(),
@@ -79,9 +82,10 @@ class ModuleCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       getZoomButton(module),
-                      Text(cropped ? module?.getDateString() ?? "" : module?.getRemainingTimeString() ?? "", style: Theme.of(context).textTheme.headline1)
+                      Text(cropped ? module?.getDateString() ?? "" : module?.getRemainingTimeString() ?? "", style: Theme.of(context).textTheme.headline1),
                     ],
                   ),
+                  cropped ? Align(alignment: Alignment.centerRight, child: Text(module?.getRemainingTimeString() ?? "", style: Theme.of(context).textTheme.headline1)) : SizedBox(),
                   cropped ? SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.0125) : SizedBox()
                 ],
               )
@@ -109,7 +113,7 @@ class ModuleCard extends StatelessWidget {
   }
 
   Widget getZoomButton(Module? module) {
-    return !cropped ? InkWell(
+    return (!cropped) ? InkWell(
       onTap: () async {
         if (module != null && module.zoomURL.isNotEmpty) {
           if (!module.zoomURL.startsWith("http://")) {

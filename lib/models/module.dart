@@ -28,9 +28,9 @@ class Module {
     Duration duration =  examTimeStamp.toDate().difference(DateTime.now());
     int days = duration.inDays;
     if (days >= 30) {
-      return "in ${(days / 30).round()} Monaten";
+      return "${(days / 30).round()} Months left";
     } else {
-      return "in $days Tagen";
+      return "$days days left";
     }
   }
 

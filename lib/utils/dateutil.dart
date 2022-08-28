@@ -14,4 +14,9 @@ class DateUtil {
     return day1!.toDate().difference(day2!.toDate());
   }
 
+  static bool isOver(Timestamp timestamp) {
+    return timestamp.compareTo(Timestamp.now()) == -1;
+  }
+
+
 }

@@ -13,3 +13,12 @@ Color randomColor() {
   int randomIndex = random.nextInt(colors.length);
   return colors[randomIndex];
 }
+
+Color darkenColor(Color color, [double amount = .1]) {
+  assert(amount >= 0 && amount <= 1);
+
+  final hsl = HSLColor.fromColor(color);
+  final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+  return hslDark.toColor();
+}

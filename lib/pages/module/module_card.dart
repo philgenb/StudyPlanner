@@ -28,8 +28,6 @@ class ModuleCard extends StatelessWidget {
       onTap: () {
         if (pressable) {
           Navigator.pushNamed(context, ModuleMenu.routeName);
-        } else {
-
         }
       },
       child: Dismissible(

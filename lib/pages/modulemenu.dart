@@ -3,11 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:studyplanner/models/module.dart';
 import 'package:studyplanner/pages/addmodule_menu.dart';
-import 'package:studyplanner/pages/module/module_card.dart';
 import 'package:studyplanner/pages/schedule/vertical_module_list.dart';
 import 'package:studyplanner/services/database.dart';
 import 'package:studyplanner/shared/appbar.dart';
-import 'package:studyplanner/shared/loading.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
 import '../models/user.dart';

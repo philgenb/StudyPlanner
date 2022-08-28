@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:studyplanner/pages/module/complete_module_card.dart';
 import 'package:studyplanner/pages/module/placeholder_card.dart';
 import 'package:studyplanner/theme/colors.dart';
 import 'package:studyplanner/utils/dateutil.dart';
@@ -40,22 +41,24 @@ class _ModuleListState extends State<ModuleList> {
       itemBuilder: (BuildContext context, int index) {
         if (index < moduleList.length - 1) {
           Duration dur = DateUtil.getDuration(moduleList[index].examTimeStamp, moduleList[index + 1].examTimeStamp);
+          bool modFinished = DateUtil.isOver(moduleList[index].examTimeStamp);
           return Column(
             children: [
               Container(
                   margin: EdgeInsets.symmetric(
                       vertical:
                       SizeHelper.getDisplayHeight(context) * 0.0075),
-                  child: (ModuleCard(
+                  child: (!modFinished ?
+                  ModuleCard(
                     colors[index % colors.length],
                     moduleList[index].moduleName,
                     module: moduleList[index],
                     pressable: false,
                     database: _database,
                     cropped: true,
-                  ))
+                  ) : CompleteModuleCard(module: moduleList[index],))
               ),
-              PlaceholderCard(duration: dur),
+              !modFinished ? PlaceholderCard(duration: dur) : const SizedBox(),
             ],
           );
         }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studyplanner/pages/module/module_card.dart';
 import 'package:studyplanner/theme/colors.dart';
+import 'package:studyplanner/utils/dateutil.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
 import '../../models/module.dart';
@@ -21,7 +22,8 @@ class _ModuleSwipeState extends State<ModuleSwipe> {
   @override
   Widget build(BuildContext context) {
     List<Module> moduleList = Provider.of<List<Module>>(context);
-    
+    moduleList.removeWhere((item) => DateUtil.isOver(item.examTimeStamp));
+
     if (moduleList.isEmpty) {
       return SizedBox(
         height: SizeHelper.getDisplayHeight(context) * 0.225,

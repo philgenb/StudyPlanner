@@ -48,25 +48,25 @@ class _HomeMenuState extends State<HomeMenu> {
             initialData: [],
             child: ModuleShortList(),
           ),
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
 
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
-                border: Border.all(), borderRadius: BorderRadius.all(Radius.circular(10))),
+                border: Border.all(), borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: Consumer<Profile>(
                 builder: (BuildContext context, profile, child) {
-                  return Text("• ${profile.credits} / 30  Credit Points", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white));
+                  return Text("• ${profile.credits} / 30  Credit Points",
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white));
                 },
             ),
           ),
 
           SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.025,),
 
-
-          Text("Your schedule", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
-          Text("Upcoming Exams and events", style: TextStyle(fontSize: 19, color: Color(0xffABABAB))),
+          const Text("Your schedule", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
+          const Text("Upcoming Exams and events", style: TextStyle(fontSize: 19, color: Color(0xffABABAB))),
           StreamProvider<List<Module>>(
               create: (context) => _database.streamModules(),
               initialData: [],

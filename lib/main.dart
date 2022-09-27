@@ -33,9 +33,7 @@ class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   CustomAppBar? customAppBar;
-
   bool isAppBarActive = true;
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +49,14 @@ class _MyAppState extends State<MyApp> {
             initialData: null,
             value: AuthService().user,
             child: MaterialApp(
-              localizationsDelegates: [
+              localizationsDelegates: const [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate
               ],
-              supportedLocales: [Locale('de'), Locale('en')],
+              supportedLocales: const [Locale('de'), Locale('en')],
               theme: ThemeData(
-                  colorScheme: ColorScheme.light(
+                  colorScheme: const ColorScheme.light(
                     primary: Color(0xff303030),
                   ),
                   fontFamily: 'Poppins',
@@ -68,7 +66,7 @@ class _MyAppState extends State<MyApp> {
                     headline1: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
                       headline2: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                     bodyText1: TextStyle(fontSize: 16, color: Colors.white)
-                  )
+                  ),
               ),
               home: Scaffold(
                 appBar: isAppBarActive ? CustomAppBar() : null,
@@ -82,7 +80,6 @@ class _MyAppState extends State<MyApp> {
             ),
           );
         }
-
         return MaterialApp(home: Loading());
       },
     );

@@ -20,7 +20,6 @@ class Wrapper extends StatelessWidget {
 
     final CustomUser? user = Provider.of<CustomUser?>(context);
 
-
     //Checks whether User is already Signed in
     if(user == null) { //no User Logged In -> Call authentication Widget
       //toggleAppBar(false);

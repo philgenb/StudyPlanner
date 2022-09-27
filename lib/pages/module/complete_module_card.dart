@@ -25,9 +25,11 @@ class CompleteModuleCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("${module.moduleName}  (${module.creditPoints} CP)",
-            style: Theme.of(context).textTheme.headline1,
-            overflow: TextOverflow.clip,
+          Expanded(
+            child: Text("${module.moduleName}  (${module.creditPoints} CP)",
+              style: Theme.of(context).textTheme.headline1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           Row(
             children: [

@@ -25,7 +25,7 @@ class _HomeMenuState extends State<HomeMenu> {
 
   final AuthService _auth = AuthService();
   late final DataBaseService _database;
-  String semester = "SS22";
+  String semester = "WS22/23";
 
   late Stream<List<Module>> semesterModuleStream;
 

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:studyplanner/models/user.dart';
-import 'package:studyplanner/utils/semesterutil.dart';
 
 import '../models/module.dart';
 import '../models/profile.dart';
@@ -30,8 +29,8 @@ class DataBaseService {
   Future createUser(String profileName) async {
     await getUserDocument().set({
       'name': profileName,
-      'moduleCount': 0,
-      'credits': 0,
+      'moduleCount': {"SS22": 0},
+      'credits': {"SS22": 0},
       'semester': "SS22"
     });
   }
@@ -62,21 +61,6 @@ class DataBaseService {
     return CustomUser(user['name'], userID: user.id);
   }
 
-  @Deprecated("Old Firebase Hierarchy")
-  Future addModule(Module module) async {
-    await getModuleCollection().doc(module.moduleName).set({
-      'name': module.moduleName,
-      'examTimeStamp': module.examTimeStamp,
-      'zoom': module.zoomURL,
-      'color': module.color.toString(),
-      'credits': double.parse(module.creditPoints),
-      'room': module.room,
-      'time': module.time
-    }, SetOptions(merge: true));
-    await incrementUserCredits(double.parse(module.creditPoints));
-    await incrementModuleCounter();
-  }
-
   Future addModuleToSemester(Module module) async {
     String semester = await getSemester();
     await getModuleCollection().doc(module.moduleName).set({
@@ -89,22 +73,33 @@ class DataBaseService {
       'room': module.room,
       'time': module.time
     }, SetOptions(merge: true));
-    await incrementUserCredits(double.parse(module.creditPoints));
-    await incrementModuleCounter();
+    await incrementUserCreditsSemester(semester, double.parse(module.creditPoints));
+    await incrementModuleCounter(semester);
   }
 
-  /// increments the user credits by the given amount
-  Future incrementUserCredits(double credits) async{
+  /// increments the user credits of a given semester by the given amount
+  @Deprecated("old")
+  Future incrementUserCredits(double credits) async {
     await getUserDocument().update({
       'credits': FieldValue.increment(credits)
     });
   }
 
+  Future incrementUserCreditsSemester(String semester, double credits) async {
+    await getUserDocument().set({
+      'credits': {
+        semester: FieldValue.increment(credits)
+      }
+    }, SetOptions(merge: true));
+  }
+
   /// decrements the user credits by the given amount
-  Future decrementUserCredits(double credits) async{
-    await getUserDocument().update({
-    'credits': FieldValue.increment(-credits)
-    });
+  Future decrementUserCredits(String semester, double credits) async{
+    await getUserDocument().set({
+      'credits': {
+        semester: FieldValue.increment(-credits)
+      }
+    }, SetOptions(merge: true));
   }
 
   // gets the credits amount of the taken user courses
@@ -113,18 +108,22 @@ class DataBaseService {
     return userDoc.get('credits');
   }
 
-  /// increments the module count of the user
-  Future incrementModuleCounter() async {
-    await getUserDocument().update({
-      'moduleCount': FieldValue.increment(1)
-    });
+  /// increments the module user count of the given semester
+  Future incrementModuleCounter(String semester) async {
+    await getUserDocument().set({
+      'moduleCount': {
+        semester: FieldValue.increment(1)
+      }
+    }, SetOptions(merge: true));
   }
 
-  /// decrements the module count of the user
-  Future decrementModuleCounter() async {
-    await getUserDocument().update({
-      'moduleCount': FieldValue.increment(-1)
-    });
+  /// decrements the module user count of the given semester
+  Future decrementModuleCounter(String semester) async {
+    await getUserDocument().set({
+      'moduleCount': {
+        semester: FieldValue.increment(-1)
+      }
+    }, SetOptions(merge: true));
   }
 
   /// gets the amount of modules taken by the user
@@ -133,12 +132,12 @@ class DataBaseService {
     return userDoc.get('moduleCount');
   }
 
+  /// removes module from user modules
   Future removeModule(Module module) async {
+    String semester = await getSemester();
     await getModuleCollection().doc(module.moduleName).delete();
-    // CollectionReference semesterModules = await getSemesterModuleCollection();
-    // semesterModules.doc(module.moduleName).delete();
-    await decrementModuleCounter();
-    await decrementUserCredits(double.parse(module.creditPoints));
+    await decrementModuleCounter(semester);
+    await decrementUserCredits(semester, double.parse(module.creditPoints));
   }
 
   void testPrintModules() {
@@ -158,6 +157,7 @@ class DataBaseService {
         .toList());
   }
 
+  /// streams the active modules from the current semester
   Stream<List<Module>> streamSemesterModules(String semester) {
     return getModuleCollection()
         .where('semester', isEqualTo: semester)
@@ -167,6 +167,7 @@ class DataBaseService {
         .toList());
   }
 
+  /// streams the user profile including user values (for example username, credits)
   Stream<Profile> get streamProfile {
     return getUserDocument().snapshots().map((snap) => Profile.fromFireStore(snap));
   }

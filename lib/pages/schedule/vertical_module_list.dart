@@ -38,9 +38,10 @@ class _ModuleListState extends State<ModuleList> {
     return ListView.builder(
       itemCount: moduleList.length,
       itemBuilder: (BuildContext context, int index) {
+        bool modFinished = DateUtil.isOver(moduleList[index].examTimeStamp);
+
         if (index < moduleList.length - 1) {
           Duration dur = DateUtil.getDuration(moduleList[index].examTimeStamp, moduleList[index + 1].examTimeStamp);
-          bool modFinished = DateUtil.isOver(moduleList[index].examTimeStamp);
           return Column(
             children: [
               Container(
@@ -65,14 +66,14 @@ class _ModuleListState extends State<ModuleList> {
             margin: EdgeInsets.symmetric(
                 vertical:
                 SizeHelper.getDisplayHeight(context) * 0.0075),
-            child: (ModuleCard(
+            child: (!modFinished ? ModuleCard(
               colors[index % colors.length],
               moduleList[index].moduleName,
               module: moduleList[index],
               pressable: false,
               database: _database,
               cropped: true,
-            ))
+            ): CompleteModuleCard(module: moduleList[index]))
         );
 
       },

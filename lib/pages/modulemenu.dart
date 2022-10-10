@@ -25,12 +25,22 @@ class _ModuleMenuState extends State<ModuleMenu> {
   final AuthService _auth = AuthService();
   late final DataBaseService _database;
 
+  String semester = "SS22";
+
   @override
   void initState() {
     CustomUser? currentUser = _auth.getCurrentUser();
     _database = DataBaseService(uid: currentUser!.getUserIdentifier());
     super.initState();
+    initSemester();
     _database.testPrintModules();
+  }
+
+  void initSemester() async {
+    String newSemester = await _database.getSemester();
+    setState(() {
+      semester = newSemester;
+    });
   }
 
   @override
@@ -50,8 +60,8 @@ class _ModuleMenuState extends State<ModuleMenu> {
             const Text("Your running modules", style: TextStyle(fontSize: 19, color: Color(0xffABABAB))),
             const SizedBox(height: 10),
             Expanded(
-              child: StreamProvider<List<Module>>(
-                create: (context) => _database.streamModules(),
+              child: StreamProvider<List<Module>>.value(
+                value: _database.streamSemesterModules(semester),
                 initialData: [],
                 child: ModuleList()
               ),

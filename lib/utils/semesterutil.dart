@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SemesterUtil {
 
-  static getCurrentSemester() {
-
+  static String getCurrentSemester() {
+    return "";
   }
 
   static List<String> getCurrentSemesterStrings() {
@@ -12,7 +12,7 @@ class SemesterUtil {
     return [
       "WS${yearEnding - 1}/$yearEnding",
       "SS$yearEnding",
-      "WS$yearEnding/${yearEnding + 1}"];
+      "WS${yearEnding}/${yearEnding + 1}"];
   }
 
 }

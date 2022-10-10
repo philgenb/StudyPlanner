@@ -10,7 +10,6 @@ import 'package:studyplanner/services/database.dart';
 import 'package:studyplanner/shared/appbar.dart';
 import 'package:studyplanner/shared/inputfield.dart';
 import 'package:studyplanner/shared/inputfieldbutton.dart';
-import 'package:studyplanner/theme/colors.dart';
 import 'package:studyplanner/utils/dateutil.dart';
 import 'package:studyplanner/utils/sizehelper.dart';
 
@@ -27,6 +26,8 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
 
   final AuthService _auth = AuthService();
   late final DataBaseService _database;
+
+  String semester = "SS22";
 
   Module module = Module(creditPoints: '0', examTimeStamp: Timestamp.now(), moduleName: '', zoomURL: '');
 
@@ -153,7 +154,7 @@ class _AddModuleMenuState extends State<AddModuleMenu> {
                     creditPoints: moduleCreditInput.getInputTitle(),
                     room: moduleRoomInput.getInputTitle(),
                 );
-                _database.addModule(module);
+                _database.addModuleToSemester(module);
                 Navigator.of(context).pop();
               },
               child: const Text("Save", style: TextStyle(fontSize: 18,

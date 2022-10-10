@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studyplanner/CustomMatApp.dart';
 
 import 'signin.dart';
 import 'registration.dart';

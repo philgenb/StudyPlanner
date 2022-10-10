@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:studyplanner/popup/semester_popup.dart';
 import 'package:studyplanner/services/auth_service.dart';
+
+import '../models/profile.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSize {
 
   bool? popupMenu;
+  Function ?changeSemester;
 
-  CustomAppBar({this.popupMenu, Key? key}) : super(key: key);
+  CustomAppBar({this.popupMenu, Key? key, this.changeSemester}) : super(key: key);
 
-  AuthService _auth = AuthService();
+
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
       backgroundColor: Colors.white,
        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.white),
       titleSpacing: 0,
-      title: Text("WS 20/21", style: const TextStyle(fontSize: 19.5, fontWeight: FontWeight.w800, color: Colors.black)),
+      title: Consumer<Profile>(
+        builder: (BuildContext context, profile, child) {
+          return Text(profile.semester, style: const TextStyle(fontSize: 19.5, fontWeight: FontWeight.w800, color: Colors.black));
+        },
+      ),
       leading: Container(
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 17.5, right: 10),
@@ -73,6 +82,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
         "assets/images/settings.svg",
         height: 30,
       ),
+      changeSemester: changeSemester,
     );
   }
 

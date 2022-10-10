@@ -16,7 +16,8 @@ class Module {
   String creditPoints;
 
 
-  Module({required this.moduleName, required this.zoomURL, required this.examTimeStamp, required this.creditPoints, this.room = "Unknown", this.time = "Unknown"}) {
+  Module({required this.moduleName, required this.zoomURL, required this.examTimeStamp,
+    required this.creditPoints, this.room = "Unknown", this.time = "Unknown"}) {
     color = randomColor();
   }
 

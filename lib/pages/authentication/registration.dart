@@ -220,22 +220,23 @@ class _RegistrationState extends State<Registration> {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.01),
-          OutlineButton(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            borderSide: const BorderSide(color: Color(0xff272727), width: 3),
-            child: const Text(
-              "Login",
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xff272727),
-                  fontWeight: FontWeight.bold),
-            ),
-            color: const Color(0xff272727),
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            onPressed: () {
-              widget.switchView!();
-            },
+          OutlinedButton(
+              onPressed: () {
+                  widget.switchView!();
+                  },
+              child: const Text(
+                    "Login",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xff272727),
+                        fontWeight: FontWeight.bold),
+                  ),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              foregroundColor: const Color(0xff272727),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              side: const BorderSide(color: Color(0xff272727), width: 3),
+            )
           ),
         ],
       ),

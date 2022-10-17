@@ -129,9 +129,16 @@ class _SignInState extends State<SignIn> {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: SizeHelper.getDisplayHeight(context) * 0.01),
-          OutlineButton(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            borderSide: const BorderSide(color: Color(0xff272727), width: 3),
+          OutlinedButton(
+            onPressed: () {
+                widget.switchView!();
+              },
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              foregroundColor: const Color(0xff272727),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              side: const BorderSide(color: Color(0xff272727), width: 3),
+            ),
             child: const Text(
               "Register",
               style: TextStyle(
@@ -139,13 +146,7 @@ class _SignInState extends State<SignIn> {
                   color: Color(0xff272727),
                   fontWeight: FontWeight.bold),
             ),
-            color: const Color(0xff272727),
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            onPressed: () {
-              widget.switchView!();
-            },
-          ),
+          )
         ],
       ),
     );

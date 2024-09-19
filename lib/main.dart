@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,12 +16,28 @@ import 'models/user.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  init();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     //App only in portrait mode
     runApp(MyApp());
   });
+}
+
+void init() async {
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "xxx",
+        appId: "xxx",
+        messagingSenderId: "xxx",
+        projectId: "xxx",
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -42,7 +59,7 @@ class _MyAppState extends State<MyApp> {
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return const Center(child: Text("Error"));
+          return const Center(child: MaterialApp(home: Text("Error with initialisation")));
         }
 
         if (snapshot.connectionState == ConnectionState.done) {

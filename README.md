@@ -1,16 +1,22 @@
-# studyplanner
+# Studyplanner
 
-An Application to organize your studies.
+Studyplanner is a Flutter app designed to help students efficiently plan their exam periods. The app allows students to view upcoming exams, manage modules, track exam intervals, and plan their exam phase effectively. It also supports Zoom links for added convenience.
 
-## Getting Started
+## 📱Features
+- View Upcoming Exams: Keep track of upcoming exams at a glance.
+- Add New Modules: Easily add and manage new modules for better organization.
+- Module Overview: Get a clear overview of all the modules and their associated exams.
+- Next Exam: Quickly see which exam is coming up next.
+- Exam Intervals: Analyze the time gaps between exams to optimize study schedules.
+- Zoom Link Support: Attach Zoom links to your exams for easy access to online meetings.
 
-This project is a starting point for a Flutter application.
+## 🎨 Idea
+Studyplanner offers an intuitive platform for students to effectively plan and manage their exam periods. With customizable features such as exam tracking, module management, and integrated Zoom link support, it helps students create a clear and structured schedule, ensuring they stay organized and prepared for their exams with enough preparation time between exams.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Technology
+- Framework: Flutter
+- Backend & Database: Firebase
+  - Real-time Database
+  - Firebase Authentication for user sign-in
+  - Firebase Storage for file storage
+- Platforms: Android & iOS
